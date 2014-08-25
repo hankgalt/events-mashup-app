@@ -1,7 +1,32 @@
 @(message: String)
 
 @main("Events Mashup App") {
-
-    @play20.welcome(message, style = "Java")
-
+    <h1 id="greeting">@message</h1>
+    <div class="main-content mainContent"></div>
+    
+     <!-- BEGIN: Underscore Template Definition. -->
+    <script type="text/template" class="template">
+        <h2>
+            <%- listTitle %>
+        </h2>
+        <ul>
+            <% _.each( listItems, function( listItem ){ %>
+            <li>
+                <%- listItem.name %>
+                <% if ( listItem.hasOlympicGold ){ %>
+                    <em>*</em>
+                <% } %>
+            </li>
+            <% }); %>
+        </ul>
+        
+        <% var showFootnote = _.any(_.pluck( rc.listItems, "hasOlympicGold" )); %>
+        
+        % if ( showFootnote ){ %>
+        <p style="font-size: 12px ;">
+            <em>* Olympic gold medalist</em>
+        </p>
+        <% } %>
+    </script>
+    <!-- END: Underscore Template Definition. -->
 }
