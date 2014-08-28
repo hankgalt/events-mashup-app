@@ -1,5 +1,6 @@
 (function( $, _ ) {
-    var eventsData;
+    var eventsData,
+        eventLink;
     
     $(document).ready( function() {
         $( ".techStack" ).html( "jQuery - " + $().jquery + " | underscore - " + _.VERSION );
@@ -14,6 +15,31 @@
             if ( $(evt.target).hasClass( "details" ) ) {
                 console.log( "setupListeners() - details button clicked " );
                 evt.preventDefault();
+                
+                var eventId = $( evt.target ).parent().data( "event-id").eventId;
+                var event = _.first( _.where( self.eventsData.results, { id: eventId } ) );
+                
+                console.log( "Description clicked - %o", { evt: evt, eventsData: self.eventsData, eventId: eventId, event: event } );
+                
+                $( "#eventDetailNode" ).html( _.template( $( "#eventDetail" ).html(), { event: event } ) );
+                
+                $( ".eventDescription" ).html( event.description );
+                
+                console.log( "There are %o occurences.", { eventbrite: occurrences( event.description, "eventbrite" ),
+                                                            Eventbrite: occurrences( event.description, "Eventbrite" ),
+                                                            EventBrite: occurrences( event.description, "EventBrite" ) });
+                                                            
+                console.log("Eventbrite anchors - %o", $( ".eventDescription" ).find( "a" ));
+                
+                $( ".eventDescription" ).find( "a" ).each( function( index, anchor ) {
+                    if ( anchor.href.indexOf( "eventbrite.com" ) > -1 ) {
+                        if ( !eventLink ) {
+                            console.log("Eventbrite anchor - %o %o", index, anchor.href);
+                            eventLink = anchor.href;
+                        }
+                    }
+                });
+                
                 $( ".hide" ).addClass( "show" ).removeClass( "hide" );
                 $( "#eventListPane" ).addClass( "hide" ).removeClass( "show" );
             } else if ( $( evt.target ).hasClass( "back" ) ) {
@@ -22,13 +48,18 @@
                 $( ".show" ).addClass( "hide" ).removeClass( "show" );
                 $( "#eventListPane" ).addClass( "show" ).removeClass( "hide" );
             } else if ( $( evt.target ).hasClass( "buy" ) ) {
-                evt.preventDefault();
-                console.log( "setupListeners() - buy button clicked " );
+                console.log( "setupListeners() - buy button clicked, eventLink: " + eventLink);
+                window.location.href = eventLink;
             }
         });
         
         $( "button.submit" ).bind( "click", { self: this }, function( evt ) {
+            eventLink = null;
+            
             getEvents( getQueryParams() );
+            
+            $( ".show" ).addClass( "hide" ).removeClass( "show" );
+            $( "#eventListPane" ).addClass( "show" ).removeClass( "hide" );
         });
     };
     
@@ -95,5 +126,20 @@
                 }
             }
         }
+    };
+    
+    var occurrences = function( string, subString, allowOverlapping ) {
+        string += ""; subString += "";
+        if ( subString.length <= 0 ) return string.length+1;
+        
+        var n = 0, 
+            pos = 0,
+            step = allowOverlapping ? 1 : subString.length;
+
+    while( true ) {
+        pos = string.indexOf( subString, pos );
+        if ( pos >= 0 ){ n++; pos += step; } else break;
     }
+    return( n );
+}
 })( jQuery, _ );
