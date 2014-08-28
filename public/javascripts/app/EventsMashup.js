@@ -42,6 +42,10 @@
                 
                 $( ".hide" ).addClass( "show" ).removeClass( "hide" );
                 $( "#eventListPane" ).addClass( "hide" ).removeClass( "show" );
+                
+                if (!eventLink) {
+                    $( "#buy").addClass( "hide" ).removeClass( "show" );
+                }
             } else if ( $( evt.target ).hasClass( "back" ) ) {
                 evt.preventDefault();
                 console.log( "setupListeners() - back button clicked " );
