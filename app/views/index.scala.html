@@ -1,10 +1,10 @@
 @(message: String)
 
 @fixed = {  
-    <div class="navbar-fixed-top fixed-item">
+    <div class="navbar-fixed-top fixed-item searchBar">
         <div class="container margin-thin">
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-md-9">
                     <div class="form-group">
                         <label for="keywords" class="col-sm-2 control-label additional-padding3">Keywords</label>
                         <div class="col-sm-12">
@@ -12,22 +12,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 additional-padding1">
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <label class="radio-inline">
-                              <input type="radio" name="inlineRadioOptions" id="and" value="true"> and
-                            </label>
-                            <label class="radio-inline">
-                              <input type="radio" name="inlineRadioOptions" id="or" value="false"> or
-                            </label>
-                        </div>
-                    </div>
+                <div class="col-md-3">
                 </div>
             </div>
-            <div class="row"></div>
             <div class="row">
-                <div class="col-lg-5">
+                <div class="col-md-5">
                     <div class="form-group">
                         <label for="location" class="col-sm-2 control-label additional-padding3">Location</label>
                         <div class="col-sm-12">
@@ -35,15 +24,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <div class="form-group">
-                        <label for="radius" class="col-sm-2 control-label additional-padding3">Radius</label>
+                        <label for="distance" class="col-sm-2 control-label additional-padding3">Distance</label>
                         <div class="col-sm-12">
-                          <input type="text" class="form-control" id="radius" placeholder="radius">
+                          <input type="text" class="form-control" id="distance" placeholder="distance">
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label for="numOfEvents" class="col-sm-2 control-label additional-padding3">Show</label>
                         <div class="col-sm-12">
@@ -51,15 +40,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 additional-padding2">
-                    <button type="button" class="btn btn-primary submit">Submit</button>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary search">Search</button>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="navbar-fixed-bottom fixed-item fixed-item-normal">
-        <div class="container">
-            <span class="techStack right-float"></span>
         </div>
     </div>
 }
@@ -71,11 +55,9 @@
             <div class="show" id="eventListPane"></div>
             <div class="hide" id="eventDetailPane">
                 <div class="row hide">
-                    <div class="col-lg-1">
+                    <div class="col-lg-12">
                         <button type="button" class="btn btn-info back">Back to list</button>
-                    </div>
-                    <div class="col-lg-1 right-float">
-                        <button type="button" id="buy" class="btn btn-info buy hide">Buy</button>
+                        <button type="button" id="buy" class="btn btn-info buy hide right-float">Buy</button>
                     </div>
                 </div>
                 <div class="row hide">
@@ -114,7 +96,7 @@
         <script type="text/x-underscore" id="eventDetail">
             <div class="row">
                 <div class="col-lg-7">
-                    <h3><%- event.name %></h3>
+                    <h3><a href="<%- event.event_url %>"><%- event.name %></a></h3>
                 </div>
                 <div class="col-lg-3">
                     <h5><% print(new Date(event.time)) %></h5>
@@ -127,11 +109,6 @@
                         <% var address_2 = event.venue.city ? event.venue.city + ( event.venue.state ? ", " + event.venue.state + ( event.venue.zip ? " " + event.venue.zip : "" ) : "" ) : "" %>
                         <h5><%- address_2 %></h5>
                     <% } %>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <h3><%- event.event_url %></h3>
                 </div>
             </div>
             <div class="row">

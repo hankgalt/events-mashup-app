@@ -7,20 +7,8 @@
 .right-float {
   float: right;
 }
-.fixed-item-narrow {
-  height: 20px;
-}
-.fixed-item-normal {
-  height: 40px;
-}
-.fixed-item-wide {
-  height: 60px;
-}
 .show-border {
   border: 2px solid red;
-}
-.has-search-header {
-  margin-top: 140px;
 }
 .additional-padding1 {
   padding-top: 25px;
@@ -34,4 +22,7 @@
 .margin-thin {
   margin-top: 4px;
   margin-bottom: 10px;
+}
+.hide-label {
+  display: none;
 }
